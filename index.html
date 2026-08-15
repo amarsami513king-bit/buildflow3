@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BuildFlow</title>
+    <meta
+      name="description"
+      content="BuildFlow futuristic gaming communication platform with secure admin-managed accounts and voice chat."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="noise"></div>
+    <div class="orb orb-one"></div>
+    <div class="orb orb-two"></div>
+    <div class="orb orb-three"></div>
+
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand" aria-label="BuildFlow home">
+          <div class="brand-mark">B</div>
+          <div class="brand-copy">
+            <span class="brand-name">BuildFlow</span>
+            <small>command nexus</small>
+          </div>
+        </div>
+
+        <div class="topbar-meta">
+          <span class="status-pill"><span class="dot"></span>System online</span>
+          <button id="logoutBtn" class="ghost-btn hidden" type="button">Logout</button>
+        </div>
+      </header>
+
+      <main class="page-shell">
+        <section id="loginScreen" class="auth-screen panel">
+          <div class="auth-grid">
+            <div class="hero-panel">
+              <div class="eyebrow">NEXT-GEN COMMUNICATION</div>
+              <h1 class="hero-title">
+                Connect faster.<br />
+                <span class="gradient-text">Build brighter.</span>
+              </h1>
+              <p class="hero-copy">
+                Secure squad communication for ambitious crews. BuildFlow keeps every user account managed by the administrator and every voice channel audio-only, instant, and controlled.
+              </p>
+
+              <div class="feature-tags">
+                <span>Secure</span>
+                <span>Audio-only</span>
+                <span>Neon UI</span>
+              </div>
+            </div>
+
+            <div class="auth-forms">
+              <div class="auth-card">
+                <div class="card-header">
+                  <span class="chip chip-admin">Admin</span>
+                  <h2>Admin login</h2>
+                </div>
+                <form id="adminLoginForm" class="auth-form">
+                  <label>
+                    <span>Username</span>
+                    <input type="text" id="adminUsername" placeholder="admin" required />
+                  </label>
+                  <label>
+                    <span>Password</span>
+                    <input type="password" id="adminPassword" placeholder="••••••••" required />
+                  </label>
+                  <button class="primary-btn" type="submit">Enter admin panel</button>
+                </form>
+              </div>
+
+              <div class="auth-card">
+                <div class="card-header">
+                  <span class="chip chip-user">User</span>
+                  <h2>User login</h2>
+                </div>
+                <form id="userLoginForm" class="auth-form">
+                  <label>
+                    <span>Username</span>
+                    <input type="text" id="userUsername" placeholder="Enter username" required />
+                  </label>
+                  <label>
+                    <span>Password</span>
+                    <input type="password" id="userPassword" placeholder="Enter password" required />
+                  </label>
+                  <button class="primary-btn alt" type="submit">Launch squad</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="dashboardScreen" class="dashboard hidden">
+          <aside class="sidebar panel glass">
+            <div class="profile-card">
+              <div class="avatar" id="profileAvatar">B</div>
+              <div>
+                <div class="profile-name" id="profileName">BuildFlow User</div>
+                <div class="profile-role" id="profileRole">Operator</div>
+              </div>
+              <div class="online-badge" id="profileStatusBadge">
+                <span class="dot"></span>
+                <span id="profileStatusText">Online</span>
+              </div>
+            </div>
+
+            <div class="section-block">
+              <div class="section-title-row">
+                <h3>Online crew</h3>
+                <span id="userCountChip" class="mini-chip">0</span>
+              </div>
+              <ul id="userList" class="user-list"></ul>
+            </div>
+          </aside>
+
+          <main class="main-stage">
+            <div class="panel glass hero-strip">
+              <div>
+                <div class="eyebrow">LIVE VOICE</div>
+                <h2>Communication uplink</h2>
+              </div>
+              <div class="connection-status">
+                <span class="status-tag" id="connectionState">Standby</span>
+              </div>
+            </div>
+
+            <div class="panel glass voice-panel">
+              <div class="voice-ui">
+                <button id="micToggleBtn" class="mic-btn" type="button" aria-label="Toggle microphone">
+                  <span class="mic-icon">🎙️</span>
+                  <span id="micBtnText">Mic OFF</span>
+                </button>
+
+                <div class="voice-readout">
+                  <div class="label-row">
+                    <span>Mic status</span>
+                    <span id="micStatusText" class="status-indicator off">Mic OFF</span>
+                  </div>
+                  <div class="label-row">
+                    <span>Voice connection</span>
+                    <span id="voiceConnectionStatus" class="status-indicator muted">Idle</span>
+                  </div>
+                  <div class="label-row">
+                    <span>Active speaker</span>
+                    <span id="selectedUserLabel">None</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="speaking-block">
+                <div class="speaking-header">
+                  <span class="pulse-dot" id="speakingIndicator"></span>
+                  <span>Speaking monitor</span>
+                </div>
+                <div id="speakingText" class="speaking-text">Waiting for input...</div>
+              </div>
+            </div>
+
+            <div class="stats-grid">
+              <div class="panel glass stat-card accent-purple">
+                <span class="stat-label">Active channels</span>
+                <strong id="channelCount">0</strong>
+              </div>
+              <div class="panel glass stat-card accent-pink">
+                <span class="stat-label">Latency</span>
+                <strong id="latencyValue">12ms</strong>
+              </div>
+              <div class="panel glass stat-card accent-cyan">
+                <span class="stat-label">Trust tier</span>
+                <strong>Secure</strong>
+              </div>
+            </div>
+          </main>
+
+          <aside class="right-rail panel glass">
+            <div id="adminPanel" class="admin-panel hidden">
+              <div class="section-title-row">
+                <h3>Admin dashboard</h3>
+                <span class="mini-chip success">Managed</span>
+              </div>
+
+              <form id="createUserForm" class="stacked-form">
+                <label>
+                  <span>Username</span>
+                  <input type="text" id="newUserName" placeholder="Enter username" required />
+                </label>
+                <label>
+                  <span>Password</span>
+                  <input type="password" id="newUserPassword" placeholder="Create password" required />
+                </label>
+                <button class="primary-btn" type="submit">Create user account</button>
+              </form>
+
+              <div class="admin-list-wrapper">
+                <div class="section-title-row compact">
+                  <h4>Account roster</h4>
+                </div>
+                <ul id="adminUserList" class="admin-user-list"></ul>
+              </div>
+            </div>
+
+            <div class="notifications-panel">
+              <div class="section-title-row compact">
+                <h4>Notifications</h4>
+              </div>
+              <ul id="notificationList" class="notification-list">
+                <li class="notification-item neutral">Awaiting command input...</li>
+              </ul>
+            </div>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
